@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main  # Adjust this to your main branch name or other desired branches
-
+permissions:
+  contents: read
+  issues: write 
 jobs:
   create_issue:
     runs-on: ubuntu-latest
