@@ -1,29 +1,23 @@
-on: [push]
-name: Create an issue on push
+name: Create Issue from Commit
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your main branch name or other desired branches
+
 jobs:
   create_issue:
-    name: Create team sync issue
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
+
     steps:
-      - name: Create team sync issue
-        with:
-          labels: "weekly sync, docs-team"
-          title: "Team sync"
-          body: |
-            ### Agenda
-
-            - [ ] Start the recording
-            - [ ] Check-ins
-            - [ ] Discussion points
-            - [ ] Post the recording
-                    
-            ### Discussion Points
-            Add things to discuss below
-
-            - [Work this week](https://github.com/orgs/github/projects/3)
-          pinned: false
-          close-previous: false
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Issue
+        run: |
+          TOKEN="${{ secrets.ACCESS_TOKEN }}"
+          REPO_URL="https://api.github.com/repos/${{ github.repository }}"
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          
+          curl -X POST -H "Authorization: token $TOKEN" -d "{\"title\":\"New Issue from Commit\", \"body\":\"Commit Message: $COMMIT_MESSAGE\"}" $REPO_URL/issues
