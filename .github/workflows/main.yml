@@ -21,5 +21,6 @@ jobs:
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
           REPO_URL="https://api.github.com/repos/${{ github.repository }}"
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          ISSUE_BODY="- [ ] Commit Message: $COMMIT_MESSAGE"
           
-          curl -X POST -H "Authorization: token $TOKEN" -d "{\"title\":\"New Issue from Commit\", \"body\":\"Commit Message: $COMMIT_MESSAGE\"}" $REPO_URL/issues
+          curl -X POST -H "Authorization: token $TOKEN" -d "{\"title\":\"$COMMIT_MESSAGE\", \"body\":\"Commit Message: $ISSUE_BODY\"}" $REPO_URL/issues
