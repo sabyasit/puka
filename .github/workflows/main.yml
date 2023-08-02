@@ -1,4 +1,7 @@
-on: [push]
+on: 
+  push:
+    branches:
+      -test1
 name: Create an issue on push
 permissions:
   contents: read
