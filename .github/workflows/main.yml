@@ -16,7 +16,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Issue
         run: |
-          TOKEN="${{ secrets.ACCESS_TOKEN }}"
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
           REPO_URL="https://api.github.com/repos/${{ github.repository }}"
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           
